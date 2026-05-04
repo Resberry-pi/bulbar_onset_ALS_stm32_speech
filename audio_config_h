@@ -1,0 +1,87 @@
+#ifndef __AUDIO_CONFIG_H__
+#define __AUDIO_CONFIG_H__
+
+/* ============================= */
+/*       SAMPLING SETTINGS       */
+/* ============================= */
+
+#define SAMPLE_RATE        16000.0f
+#define AUDIO_BUFFER_SIZE  8192      // 0.512 sec recording
+
+
+/* ============================= */
+/*        STFT PARAMETERS        */
+/* ============================= */
+
+#define FRAME_SIZE         1024
+#define FRAME_HOP          512
+#define FFT_SIZE           1024
+
+
+/* ============================= */
+/*       SPECTROGRAM LIMITS      */
+/* ============================= */
+
+#define MAX_FRAMES         30
+#define MAX_BINS           (FFT_SIZE/2)
+
+
+/* ============================= */
+/*         GFCC SETTINGS         */
+/* ============================= */
+
+#define NUM_MEL_FILTERS    64
+#define GFCC_NUM_COEFFS    13
+
+
+/* ============================= */
+/*          NNMF SETTINGS        */
+/* ============================= */
+
+#define NNMF_ITER          10
+
+
+/* ============================= */
+/*        NUMERIC CONSTANTS      */
+/* ============================= */
+
+#define LOG_EPSILON        1e-6f
+
+
+/* ============================= */
+/*        DERIVED VALUES         */
+/* ============================= */
+
+#define NUM_FRAMES \
+((AUDIO_BUFFER_SIZE - FRAME_SIZE) / FRAME_HOP + 1)
+
+#define NUM_FREQ_BINS      (FFT_SIZE / 2)
+
+
+/* ============================= */
+/*        SAFETY CHECKS          */
+/* ============================= */
+
+#if (FFT_SIZE < FRAME_SIZE)
+#error "FFT_SIZE must be >= FRAME_SIZE"
+#endif
+
+#if (AUDIO_BUFFER_SIZE < FRAME_SIZE)
+#error "AUDIO_BUFFER_SIZE must be >= FRAME_SIZE"
+#endif
+
+#if (FRAME_HOP == 0)
+#error "FRAME_HOP must be > 0"
+#endif
+
+#if (MAX_FRAMES < NUM_FRAMES)
+#warning "MAX_FRAMES smaller than possible frame count"
+#endif
+
+#endif
+#if (FRAME_HOP == 0)
+#error "FRAME_HOP must be > 0"
+#endif
+
+
+
